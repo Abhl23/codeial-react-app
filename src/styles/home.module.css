@@ -1,0 +1,77 @@
+.postWrapper {
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin-top: 20px;
+  background: #fff;
+}
+.postHeader {
+  padding: 10px 10px;
+}
+.postAvatar {
+  display: flex;
+}
+.postAvatar > div {
+  display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+}
+.postAvatar img {
+  height: 40px;
+}
+.postAvatar .postAuthor {
+  color: #616161;
+  /* font-family: Open Sans; */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+}
+.postAvatar .postTime {
+  /* font-family: Open Sans; */
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #9e9e9e;
+}
+.postContent {
+  /* font-family: Open Sans; */
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #424242;
+  margin-top: 15px;
+}
+.postActions {
+  padding: 5px;
+  display: flex;
+  border: 1px solid #e0e0e0;
+  padding: 5px 10px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #616161;
+  border-right: none;
+  border-left: none;
+}
+.postActions img {
+  height: 18px;
+}
+.postActions img:hover {
+  cursor: pointer;
+}
+.postLike {
+  display: flex;
+  align-items: center;
+}
+.postCommentsIcon {
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+}
+.postLike span,
+.postCommentsIcon span {
+  margin-left: 7px;
+}
