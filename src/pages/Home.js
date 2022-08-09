@@ -10,7 +10,7 @@ const Home = (props) => {
   return (
     <div className={styles.postsList}>
       {posts.map((post) => (
-        <div className={styles.postWrapper} key={`post=${post._id}`}>
+        <div className={styles.postWrapper} key={`post-${post._id}`}>
           <div className={styles.postHeader}>
             <div className={styles.postAvatar}>
               <img
@@ -46,7 +46,9 @@ const Home = (props) => {
             </div>
 
             <div className={styles.postCommentsList}>
-                <Comment />
+                {post.comments.map((comment) => (
+                  <Comment comment={comment} key={`comment-${comment._id}`} />
+                ))}
             </div>
           </div>
         </div>

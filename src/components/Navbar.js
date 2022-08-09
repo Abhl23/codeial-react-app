@@ -1,5 +1,7 @@
 import styles from '../styles/navbar.module.css';
 
+import {Link} from 'react-router-dom';
+
 const Navbar = () => {
   return (
     <div className={styles.nav}>
@@ -14,20 +16,20 @@ const Navbar = () => {
 
       <div className={styles.rightNav}>
         <div className={styles.user}>
-          <a href="/">
+          <Link to="/">
             <img
               src="https://cdn-icons.flaticon.com/png/512/3899/premium/3899618.png?token=exp=1659965408~hmac=cfbd2926f7111fe58815a22cd8be044a"
               alt=""
               className={styles.userDp}
             />
-          </a>
-          <span>Aakash</span>
+          </Link>
+          <span>Abhishek</span>
         </div>
 
         <div className={styles.navLinks}>
           <ul>
             <li>
-              <a href="/">Log in</a>
+              <Link to="/login">Log in</Link>
             </li>
             <li>
               <a href="/">Log out</a>
