@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
+import { useAuth } from '../hooks';
 
 import styles from '../styles/login.module.css';
 
-import { login } from '../api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +11,9 @@ const Login = () => {
   const [loggingIn, setLoggingIn] = useState(false);
 
   const { addToast } = useToasts();
+
+  const auth=useAuth();
+  console.log(auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,8 +28,8 @@ const Login = () => {
         });
     }
 
-    const response=await login(email, password);
-    console.log(response.message);
+    const response=await auth.login(email, password);
+    
     if(response.success){
         addToast('Log In Successful!', {
             appearance : 'success'
