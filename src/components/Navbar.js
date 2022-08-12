@@ -18,7 +18,7 @@ const Navbar = () => {
         <div className={styles.user}>
           <a href="/user/abcd">
             <img
-              src="https://cdn-icons.flaticon.com/png/512/3899/premium/3899618.png?token=exp=1659965408~hmac=cfbd2926f7111fe58815a22cd8be044a"
+              src="https://cdn-icons-png.flaticon.com/128/149/149071.png"
               alt=""
               className={styles.userDp}
             />

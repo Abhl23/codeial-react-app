@@ -14,7 +14,7 @@ const Home = (props) => {
           <div className={styles.postHeader}>
             <div className={styles.postAvatar}>
               <img
-                src="https://cdn-icons.flaticon.com/png/512/3899/premium/3899618.png?token=exp=1659965408~hmac=cfbd2926f7111fe58815a22cd8be044a"
+                src="https://cdn-icons-png.flaticon.com/128/149/149071.png"
                 alt="user-pic"
               />
               <div>
@@ -27,7 +27,7 @@ const Home = (props) => {
             <div className={styles.postActions}>
               <div className={styles.postLike}>
                 <img
-                  src="https://cdn-icons.flaticon.com/png/512/3670/premium/3670215.png?token=exp=1659965453~hmac=9fc53bc3b636d8ba244fdf9ae1a491c2"
+                  src="https://cdn-icons-png.flaticon.com/128/1593/1593952.png  "
                   alt="likes-icon"
                 />
                 <span>5</span>

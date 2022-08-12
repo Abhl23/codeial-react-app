@@ -26,7 +26,7 @@ const Login = () => {
     }
 
     const response=await login(email, password);
-
+    console.log(response.message);
     if(response.success){
         addToast('Log In Successful!', {
             appearance : 'success'
@@ -38,7 +38,7 @@ const Login = () => {
         });
     }
 
-    return setLoggingIn(false);
+    setLoggingIn(false);
   };
 
   return (
