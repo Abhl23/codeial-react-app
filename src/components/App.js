@@ -1,10 +1,8 @@
-import {useEffect, useState} from 'react';
-import {getPosts} from '../api';
-
 import { Routes, Route } from 'react-router-dom';
 
 import { Home, Login } from '../pages';
 import {Loader, Navbar} from './';
+import { useAuth } from '../hooks';
 
 const About = () => {
   return (
@@ -26,26 +24,25 @@ const Page404 = () => {
 
 function App() {
 
-  const [posts, setPosts]=useState([]);
-  const [loading, setLoading]=useState(true);
+  const auth=useAuth();
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response=await getPosts();
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     const response=await getPosts();
 
-      console.log(response);
+  //     console.log(response);
 
-      if(response.success){
-        setPosts(response.data.posts);
-      }
+  //     if(response.success){
+  //       setPosts(response.data.posts);
+  //     }
 
-      setLoading(false);
-    }
+  //     setLoading(false);
+  //   }
 
-    fetchPosts();
-  }, []);
+  //   fetchPosts();
+  // }, []);
 
-  if(loading){
+  if(auth.loading){
     return <Loader />;
   }
 
@@ -53,7 +50,7 @@ function App() {
     <div className="App">
       <Navbar />
         <Routes>
-          <Route path="/" element={<Home posts={posts} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/user/:userId" element={<UserInfo />} />
           <Route path="/login" element={<Login />} />
