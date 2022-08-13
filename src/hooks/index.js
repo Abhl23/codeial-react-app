@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../providers/AuthProvider';
 
 import { login as userLogin } from '../api';
-
+import { LOCALSTORAGE_TOKEN_KEY, removeItemFromLocalStorage, setItemInLocalStorage } from '../utils';
 
 export const useAuth = () => {
   return useContext(AuthContext);
@@ -14,25 +14,30 @@ export const useProvideAuth = () => {
   const [loading, setLoading] = useState(true);
 
   const login = async (email, password) => {
-    const response=await userLogin(email, password);
+    const response = await userLogin(email, password);
 
-    if(response.success){
-        setUser(response.data.user);
+    if (response.success) {
+      setUser(response.data.user);
 
-        return {
-            success : true
-        };
-    }
-    else{
-        return {
-            success : false,
-            message : response.message
-        };
+      setItemInLocalStorage(
+        LOCALSTORAGE_TOKEN_KEY,
+        response.data.token ? response.data.token : null
+      );
+
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+        message: response.message,
+      };
     }
   };
 
   const logout = () => {
     setUser(null);
+    removeItemFromLocalStorage(LOCALSTORAGE_TOKEN_KEY);
   };
 
   return {
