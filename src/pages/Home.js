@@ -50,7 +50,7 @@ const Home = (props) => {
             <div className={styles.postActions}>
               <div className={styles.postLike}>
                 <img
-                  src="https://cdn-icons-png.flaticon.com/128/1593/1593952.png  "
+                  src="https://cdn-icons-png.flaticon.com/512/889/889140.png"
                   alt="likes-icon"
                 />
                 <span>5</span>
@@ -58,7 +58,7 @@ const Home = (props) => {
 
               <div className={styles.postCommentsIcon}>
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/6460/6460733.png"
+                  src="https://cdn-icons-png.flaticon.com/128/1789/1789313.png"
                   alt="comments-icon"
                 />
                 <span>2</span>
