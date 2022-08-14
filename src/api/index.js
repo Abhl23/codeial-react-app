@@ -6,6 +6,7 @@ const customFetch = async (url, {body, ...customConfig}) => {
 
     const headers = {
         'content-type' : 'application/x-www-form-urlencoded',
+        accept : 'application/json'
     }
 
     if(token){
@@ -60,9 +61,17 @@ export const login = (email, password) => {
 };
 
 
-export const signup = (name, email, password, confirm_password) => {
+export const signup = (name, email, password, confirmPassword) => {
     return customFetch(API_URLS.signup(), {
         method : 'POST',
-        body : {name, email, password, confirm_password}
+        body : {name, email, password, confirm_password : confirmPassword}
+    });
+};
+
+
+export const editProfile = (userId, name, password, confirmPassword) => {
+    return customFetch(API_URLS.editUser(), {
+        method : 'POST',
+        body : {id : userId, name, password, confirm_password : confirmPassword}
     });
 };
