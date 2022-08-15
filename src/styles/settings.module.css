@@ -37,24 +37,24 @@
   outline: none;
 }
 .settings .editBtn {
-  border: 1px solid #ef7917;
+  border: 1px solid #6e83b7;
   box-sizing: border-box;
-  color: #ef7917;
+  color: #6e83b7;
 }
 .settings .saveBtn {
-  background: #ef7917;
+  background: #6e83b7;
   color: #fff;
   border: none;
   padding: 10px 20px;
 }
 .settings .goBack {
-  color: #ef7917;
+  color: #6e83b7;
+  border: 1px solid #6e83b7;
   margin-top: 7px;
   font-size: 13px;
 }
 .settings .goBack:hover {
   cursor: pointer;
-  text-decoration: underline;
 }
 .settings .field {
   margin-bottom: 10px;
