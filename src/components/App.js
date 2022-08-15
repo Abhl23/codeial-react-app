@@ -20,6 +20,7 @@ const PrivateRoute = ({ children }) => {
 
 function App() {
   const auth = useAuth();
+  console.log('auth in App', auth);
 
   if (auth.loading) {
     return <Loader />;

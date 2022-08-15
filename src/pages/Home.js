@@ -1,22 +1,22 @@
 import styles from '../styles/home.module.css';
 
-import {Comment, Loader} from '../components';
+import { Comment, Loader } from '../components';
 
 import { useEffect, useState } from 'react';
 import { getPosts } from '../api';
 import { Link } from 'react-router-dom';
 
 const Home = (props) => {
-  const [posts, setPosts]=useState([]);
-  const [loading, setLoading]=useState(true);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response=await getPosts();
+      const response = await getPosts();
 
       console.log('In Home', response);
 
-      if(response.success){
+      if (response.success) {
         setPosts(response.data.posts);
       }
 
@@ -26,7 +26,7 @@ const Home = (props) => {
     fetchPosts();
   }, []);
 
-  if(loading){
+  if (loading) {
     return <Loader />;
   }
 
@@ -41,7 +41,12 @@ const Home = (props) => {
                 alt="user-pic"
               />
               <div>
-                <Link to={`/user/${post.user._id}`} className={styles.postAuthor}>{post.user.name}</Link>
+                <Link
+                  to={`/user/${post.user._id}`}
+                  className={styles.postAuthor}
+                >
+                  {post.user.name}
+                </Link>
                 <span className={styles.postTime}>a minute ago</span>
               </div>
             </div>
@@ -69,9 +74,9 @@ const Home = (props) => {
             </div>
 
             <div className={styles.postCommentsList}>
-                {post.comments.map((comment) => (
-                  <Comment comment={comment} key={`comment-${comment._id}`} />
-                ))}
+              {post.comments.map((comment) => (
+                <Comment comment={comment} key={`comment-${comment._id}`} />
+              ))}
             </div>
           </div>
         </div>
@@ -79,6 +84,5 @@ const Home = (props) => {
     </div>
   );
 };
-
 
 export default Home;

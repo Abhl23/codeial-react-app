@@ -1,11 +1,61 @@
 import styles from '../styles/settings.module.css';
 
+import { useParams, useNavigate } from 'react-router-dom';
+
 import { useToasts } from 'react-toast-notifications';
+import { useEffect, useState } from 'react';
+import { fetchUserProfile } from '../api';
+import { Loader } from '../components';
+import { useAuth } from '../hooks';
 
 const UserProfile = () => {
-  const user = {};
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const { addToast } = useToasts();
+  const navigate = useNavigate();
+
+  const { userId } = useParams();
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const response = await fetchUserProfile(userId);
+
+      if (response.success) {
+        setUser(response.data.user);
+      } else {
+        addToast(response.message, {
+          appearance: 'error',
+        });
+
+        return navigate('/');
+      }
+
+      setLoading(false);
+    };
+
+    getUser();
+  }, [userId, addToast, navigate]);
+
+  const checkIfUserIsAFriend = () => {
+    const friends = auth.user.friendships;
+    
+    const friendIds = friends.map((friend) => friend.to_user._id);
+
+    const index = friendIds.indexOf(userId);
+
+    if (index !== -1) {
+      return true;
+    }
+
+    return false;
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.settings}>
@@ -27,13 +77,11 @@ const UserProfile = () => {
       </div>
 
       <div className={styles.btnGrp}>
-        <button className={styles.saveBtn}>
-          Add Friend
-        </button>
-
-        <button className={styles.saveBtn}>
-          Remove Friend
-        </button>
+        {checkIfUserIsAFriend() ? (
+          <button className={styles.saveBtn}>Remove Friend</button>
+        ) : (
+          <button className={styles.saveBtn}>Add Friend</button>
+        )}
       </div>
     </div>
   );
