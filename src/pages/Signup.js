@@ -4,7 +4,7 @@ import { useAuth, useFormInput } from '../hooks';
 import { useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const name = useFormInput('');
@@ -17,6 +17,7 @@ const Signup = () => {
   const { addToast } = useToasts();
   const auth = useAuth();
   const navigate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,6 +66,10 @@ const Signup = () => {
 
     setSigningUp(false);
   };
+
+  if(auth.user){
+    return <Navigate replace to="/" />;
+  }
 
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit}>

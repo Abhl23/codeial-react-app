@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { useAuth } from '../hooks';
+import { Navigate } from 'react-router-dom';
 
 import styles from '../styles/login.module.css';
-
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ const Login = () => {
 
   const { addToast } = useToasts();
 
-  const auth=useAuth();
+  const auth = useAuth();
   console.log(auth);
 
   const handleSubmit = async (e) => {
@@ -21,28 +21,31 @@ const Login = () => {
     setLoggingIn(true);
 
     if (!email || !password) {
-        setLoggingIn(false);
+      setLoggingIn(false);
 
-        return addToast('Please enter both Email and Password', {
-            appearance : 'error'
-        });
+      return addToast('Please enter both Email and Password', {
+        appearance: 'error',
+      });
     }
 
-    const response=await auth.login(email, password);
-    
-    if(response.success){
-        addToast('Log In Successful!', {
-            appearance : 'success'
-        });
-    }
-    else{
-        addToast(response.message, {
-            appearance : 'error'
-        });
+    const response = await auth.login(email, password);
+
+    if (response.success) {
+      addToast('Log In Successful!', {
+        appearance: 'success',
+      });
+    } else {
+      addToast(response.message, {
+        appearance: 'error',
+      });
     }
 
     setLoggingIn(false);
   };
+
+  if (auth.user) {
+    return <Navigate replace to="/" />;
+  }
 
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit}>
@@ -67,7 +70,9 @@ const Login = () => {
       </div>
 
       <div className={styles.field}>
-        <button disabled={loggingIn}>{loggingIn ? 'Logging In...' : 'Log In'}</button>
+        <button disabled={loggingIn}>
+          {loggingIn ? 'Logging In...' : 'Log In'}
+        </button>
       </div>
     </form>
   );
