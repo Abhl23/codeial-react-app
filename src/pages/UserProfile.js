@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useToasts } from 'react-toast-notifications';
 import { useEffect, useState } from 'react';
-import { addFriend, fetchUserProfile } from '../api';
+import { addFriend, fetchUserProfile, removeFriend } from '../api';
 import { Loader } from '../components';
 import { useAuth } from '../hooks';
 
@@ -59,11 +59,36 @@ const UserProfile = () => {
 
     const response = await addFriend(userId);
 
-    if(response.success){
+    if (response.success) {
       auth.updateUserFriends(true, response.data.friendship);
 
       addToast('Friend Added!', {
+        appearance: 'success',
+      });
+    } else {
+      addToast(response.message, {
+        appearance: 'error',
+      });
+    }
+
+    setRequestInProgress(false);
+  };
+
+  const handleRemoveFriend = async () => {
+    setRequestInProgress(true);
+
+    const response = await removeFriend(userId);
+
+    if(response.success){
+      auth.updateUserFriends(false, userId);
+
+      addToast('Friend Removed!', {
         appearance : 'success'
+      });
+    }
+    else{
+      addToast(response.message, {
+        appearance: 'error'
       });
     }
 
@@ -95,7 +120,11 @@ const UserProfile = () => {
 
       <div className={styles.btnGrp}>
         {checkIfUserIsAFriend() ? (
-          <button className={styles.saveBtn} disabled={requestInProgress}>
+          <button
+            className={styles.saveBtn}
+            disabled={requestInProgress}
+            onClick={handleRemoveFriend}
+          >
             {requestInProgress ? 'Removing Friend...' : 'Remove Friend'}
           </button>
         ) : (

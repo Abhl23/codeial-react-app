@@ -95,3 +95,10 @@ export const addFriend = (userId) => {
         method : 'POST',
     });
 };
+
+
+export const removeFriend = (userId) => {
+    return customFetch(API_URLS.removeFriend(userId), {
+        method : 'POST',
+    });
+};
