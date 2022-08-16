@@ -28,7 +28,6 @@ const customFetch = async (url, {body, ...customConfig}) => {
     try{
         const response=await fetch(url, config);
         const data=await response.json();
-        console.log('In API', data);
 
         if(data.success){
             return {
@@ -79,6 +78,13 @@ export const editProfile = (userId, name, password, confirmPassword) => {
 
 export const fetchUserProfile = (userId) => {
     return customFetch(API_URLS.userInfo(userId), {
+        method : 'GET',
+    });
+};
+
+
+export const fetchUserFriends = () => {
+    return customFetch(API_URLS.friends(), {
         method : 'GET',
     });
 };

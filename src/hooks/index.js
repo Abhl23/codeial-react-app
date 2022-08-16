@@ -2,8 +2,13 @@ import { useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from '../providers/AuthProvider';
 
-import { editProfile, login as userLogin, signup as userSignup } from '../api';
-import { getItemFromLocalStorage, LOCALSTORAGE_TOKEN_KEY, removeItemFromLocalStorage, setItemInLocalStorage } from '../utils';
+import { editProfile, fetchUserFriends, login as userLogin, signup as userSignup } from '../api';
+import {
+  getItemFromLocalStorage,
+  LOCALSTORAGE_TOKEN_KEY,
+  removeItemFromLocalStorage,
+  setItemInLocalStorage,
+} from '../utils';
 import jwt from 'jwt-decode';
 
 export const useAuth = () => {
@@ -15,15 +20,25 @@ export const useProvideAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const userToken=getItemFromLocalStorage(LOCALSTORAGE_TOKEN_KEY);
+    const getUser = async () => {
+      const userToken = getItemFromLocalStorage(LOCALSTORAGE_TOKEN_KEY);
 
-    if(userToken){
-      const user=jwt(userToken);
+      if (userToken) {
+        const user = jwt(userToken);
 
-      setUser(user);
-    }
+        const response = await fetchUserFriends();
+        
+        if(response.success){
+          user.friendships=response.data.friends;
+        }
 
-    setLoading(false);
+        setUser(user);
+      }
+
+      setLoading(false);
+    };
+
+    getUser();
   }, []);
 
   const login = async (email, password) => {
@@ -54,37 +69,38 @@ export const useProvideAuth = () => {
   };
 
   const signup = async (name, email, password, confirmPassword) => {
-    const response=await userSignup(name, email, password, confirmPassword);
+    const response = await userSignup(name, email, password, confirmPassword);
 
-    if(response.success){
+    if (response.success) {
       return {
-        success : true
+        success: true,
       };
-    }
-    else{
+    } else {
       return {
-        message : response.message,
-        success : false
+        message: response.message,
+        success: false,
       };
     }
   };
 
   const updateUser = async (userId, name, password, confirmPassword) => {
-    const response=await editProfile(userId, name, password, confirmPassword);
+    const response = await editProfile(userId, name, password, confirmPassword);
 
-    if(response.success){
+    if (response.success) {
       setUser(response.data.user);
 
-      setItemInLocalStorage(LOCALSTORAGE_TOKEN_KEY, response.data.token ? response.data.token : null);
+      setItemInLocalStorage(
+        LOCALSTORAGE_TOKEN_KEY,
+        response.data.token ? response.data.token : null
+      );
 
       return {
-        success : true
+        success: true,
       };
-    }
-    else{
+    } else {
       return {
-        message : response.message,
-        success : false
+        message: response.message,
+        success: false,
       };
     }
   };
@@ -99,16 +115,15 @@ export const useProvideAuth = () => {
   };
 };
 
-
 export const useFormInput = (initialValue) => {
-  const [value, setValue]=useState(initialValue);
+  const [value, setValue] = useState(initialValue);
 
   const handleChange = (e) => {
     setValue(e.target.value);
-  }
+  };
 
   return {
     value,
-    onChange : handleChange
+    onChange: handleChange,
   };
 };
