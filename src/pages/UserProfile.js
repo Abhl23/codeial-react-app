@@ -4,13 +4,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useToasts } from 'react-toast-notifications';
 import { useEffect, useState } from 'react';
-import { fetchUserProfile } from '../api';
+import { addFriend, fetchUserProfile } from '../api';
 import { Loader } from '../components';
 import { useAuth } from '../hooks';
 
 const UserProfile = () => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const [requestInProgress, setRequestInProgress] = useState(false);
 
   const { addToast } = useToasts();
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const UserProfile = () => {
 
   const checkIfUserIsAFriend = () => {
     const friends = auth.user.friendships;
-    
+
     const friendIds = friends.map((friend) => friend.to_user._id);
 
     const index = friendIds.indexOf(userId);
@@ -51,6 +52,22 @@ const UserProfile = () => {
     }
 
     return false;
+  };
+
+  const handleAddFriend = async () => {
+    setRequestInProgress(true);
+
+    const response = await addFriend(userId);
+
+    if(response.success){
+      auth.updateUserFriends(true, response.data.friendship);
+
+      addToast('Friend Added!', {
+        appearance : 'success'
+      });
+    }
+
+    setRequestInProgress(false);
   };
 
   if (loading) {
@@ -78,9 +95,17 @@ const UserProfile = () => {
 
       <div className={styles.btnGrp}>
         {checkIfUserIsAFriend() ? (
-          <button className={styles.saveBtn}>Remove Friend</button>
+          <button className={styles.saveBtn} disabled={requestInProgress}>
+            {requestInProgress ? 'Removing Friend...' : 'Remove Friend'}
+          </button>
         ) : (
-          <button className={styles.saveBtn}>Add Friend</button>
+          <button
+            className={styles.saveBtn}
+            disabled={requestInProgress}
+            onClick={handleAddFriend}
+          >
+            {requestInProgress ? 'Adding Friend...' : 'Add Friend'}
+          </button>
         )}
       </div>
     </div>
