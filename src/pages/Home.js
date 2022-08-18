@@ -1,6 +1,6 @@
 import styles from '../styles/home.module.css';
 
-import { Comment, Loader, FriendsList } from '../components';
+import { Comment, Loader, FriendsList, CreatePost } from '../components';
 
 import { useEffect, useState } from 'react';
 import { getPosts } from '../api';
@@ -36,6 +36,7 @@ const Home = (props) => {
   return (
     <div className={styles.home}>
       <div className={styles.postsList}>
+        {auth.user && <CreatePost />}
         {posts.map((post) => (
           <div className={styles.postWrapper} key={`post-${post._id}`}>
             <div className={styles.postHeader}>
