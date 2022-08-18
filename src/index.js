@@ -3,18 +3,24 @@ import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import { App } from './components';
 
-import {BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
 
-import { AuthProvider } from './providers/AuthProvider';
+import { AuthProvider, PostsProvider } from './providers';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <ToastProvider autoDismiss autoDismissTimeout={5000} placement="top-right">
+      <ToastProvider
+        autoDismiss
+        autoDismissTimeout={5000}
+        placement="top-right"
+      >
         <AuthProvider>
-          <App />
+          <PostsProvider>
+            <App />
+          </PostsProvider>
         </AuthProvider>
       </ToastProvider>
     </Router>

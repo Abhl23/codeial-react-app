@@ -2,34 +2,15 @@ import styles from '../styles/home.module.css';
 
 import { Comment, Loader, FriendsList, CreatePost } from '../components';
 
-import { useEffect, useState } from 'react';
-import { getPosts } from '../api';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../hooks';
+import { useAuth, usePosts } from '../hooks';
 
-const Home = (props) => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Home = () => {
 
   const auth = useAuth();
+  const posts=usePosts();
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await getPosts();
-
-      console.log('In Home', response);
-
-      if (response.success) {
-        setPosts(response.data.posts);
-      }
-
-      setLoading(false);
-    };
-
-    fetchPosts();
-  }, []);
-
-  if (loading) {
+  if (posts.loading) {
     return <Loader />;
   }
 
@@ -37,7 +18,7 @@ const Home = (props) => {
     <div className={styles.home}>
       <div className={styles.postsList}>
         {auth.user && <CreatePost />}
-        {posts.map((post) => (
+        {posts.data.map((post) => (
           <div className={styles.postWrapper} key={`post-${post._id}`}>
             <div className={styles.postHeader}>
               <div className={styles.postAvatar}>
@@ -63,7 +44,7 @@ const Home = (props) => {
                     src="https://cdn-icons-png.flaticon.com/512/889/889140.png"
                     alt="likes-icon"
                   />
-                  <span>5</span>
+                  <span>{post.likes.length}</span>
                 </div>
 
                 <div className={styles.postCommentsIcon}>
@@ -71,7 +52,7 @@ const Home = (props) => {
                     src="https://cdn-icons-png.flaticon.com/128/1789/1789313.png"
                     alt="comments-icon"
                   />
-                  <span>2</span>
+                  <span>{post.comments.length}</span>
                 </div>
               </div>
               <div className={styles.postCommentBox}>
