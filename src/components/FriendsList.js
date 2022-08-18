@@ -4,8 +4,8 @@ import styles from '../styles/home.module.css';
 
 const FriendsList = () => {
   const auth = useAuth();
-
-  const { friendships } = auth.user;
+  
+  const { friendships = [] } = auth.user;
 
   return (
     <div className={styles.friendsList}>
@@ -28,7 +28,9 @@ const FriendsList = () => {
                   alt=""
                 />
               </div>
-              <div className={styles.friendsName}>{friendship.to_user.email}</div>
+              <div className={styles.friendsName}>
+                {friendship.to_user.email}
+              </div>
             </Link>
           </div>
         ))}

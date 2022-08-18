@@ -28,7 +28,7 @@ const Home = () => {
                 />
                 <div>
                   <Link
-                    to={`/user/${post.user._id}`}
+                    to={auth.user._id === post.user._id ? "/settings" : `/user/${post.user._id}`}
                     className={styles.postAuthor}
                   >
                     {post.user.name}

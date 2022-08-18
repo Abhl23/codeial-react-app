@@ -6,8 +6,8 @@ import {
   editProfile,
   fetchUserFriends,
   login as userLogin,
-  signup as userSignup, 
-  getPosts
+  signup as userSignup,
+  getPosts,
 } from '../api';
 import {
   getItemFromLocalStorage,
@@ -170,7 +170,11 @@ export const useProvidePosts = () => {
     fetchPosts();
   }, []);
 
-  const addPostToState = () => {};
+  const addPostToState = (post) => {
+    const newPosts = [post, ...posts];
+
+    setPosts(newPosts);
+  };
 
   return {
     data: posts,
