@@ -57,6 +57,14 @@ export const useProvideAuth = () => {
         response.data.token ? response.data.token : null
       );
 
+      const friendsResponse = await fetchUserFriends();
+
+      if (friendsResponse.success) {
+        response.data.user.friendships = friendsResponse.data.friends;
+
+        setUser(response.data.user);
+      }
+
       return {
         success: true,
       };
@@ -123,7 +131,7 @@ export const useProvideAuth = () => {
 
       setUser({
         ...user,
-        friendships : updatedFriendships
+        friendships: updatedFriendships,
       });
     }
   };
