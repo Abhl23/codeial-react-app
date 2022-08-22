@@ -9,12 +9,14 @@ import {
   signup as userSignup,
   getPosts,
 } from '../api';
+
 import {
   getItemFromLocalStorage,
   LOCALSTORAGE_TOKEN_KEY,
   removeItemFromLocalStorage,
   setItemInLocalStorage,
 } from '../utils';
+
 import jwt from 'jwt-decode';
 
 export const useAuth = () => {
@@ -176,10 +178,23 @@ export const useProvidePosts = () => {
     setPosts(newPosts);
   };
 
+  const addCommentToState = (comment, postId) => {
+    const newPosts = posts.map((post) => {
+      if (post._id === postId) {
+        post.comments.push(comment);
+      }
+
+      return post;
+    });
+
+    setPosts(newPosts);
+  };
+
   return {
     data: posts,
     loading,
     addPostToState,
+    addCommentToState
   };
 };
 
