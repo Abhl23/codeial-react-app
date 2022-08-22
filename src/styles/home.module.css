@@ -126,6 +126,9 @@
   color: #616161;
   margin-left: 8px;
 }
+.postCommentLikes:hover {
+  cursor: pointer;
+}
 .postCommentContent {
   margin-top: 7px;
 }
@@ -140,7 +143,6 @@
 .postCommentsList .commentLike img:hover {
   cursor: pointer;
 }
-
 
 /* -------------------FriendsList-Styles--------------------- */
 
@@ -200,7 +202,6 @@
 .postsList {
   flex: 1;
 }
-
 
 /* -------------------CreatePost-Styles--------------------- */
 

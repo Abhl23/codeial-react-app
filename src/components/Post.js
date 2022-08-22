@@ -1,10 +1,11 @@
 import styles from '../styles/home.module.css';
 
+import PropTypes from 'prop-types';
 import { Comment } from './';
 
 import { Link } from 'react-router-dom';
 import { useAuth, usePosts } from '../hooks';
-import { addComment } from '../api';
+import { addComment, toggleLike } from '../api';
 import { useToasts } from 'react-toast-notifications';
 import { useState } from 'react';
 
@@ -40,6 +41,26 @@ const Post = ({ post }) => {
     }
   };
 
+  const handlePostLike = async () => {
+    const response = await toggleLike(post._id, 'Post');
+
+    if (response.success) {
+      if (response.data.deleted) {
+        addToast('Like Removed!', {
+          appearance: 'success',
+        });
+      } else {
+        addToast('Like Added!', {
+          appearance: 'success',
+        });
+      }
+    } else {
+      addToast(response.message, {
+        appearance: 'error',
+      });
+    }
+  };
+
   return (
     <div className={styles.postWrapper}>
       <div className={styles.postHeader}>
@@ -69,6 +90,7 @@ const Post = ({ post }) => {
             <img
               src="https://cdn-icons-png.flaticon.com/512/889/889140.png"
               alt="likes-icon"
+              onClick={handlePostLike}
             />
             <span>{post.likes.length}</span>
           </div>
@@ -102,3 +124,8 @@ const Post = ({ post }) => {
 };
 
 export default Post;
+
+
+Post.propTypes={
+  post : PropTypes.object.isRequired
+};
