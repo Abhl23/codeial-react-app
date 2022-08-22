@@ -1,13 +1,12 @@
 import styles from '../styles/home.module.css';
 
-import { Comment } from '../components';
+import { Comment } from './';
 
 import { Link } from 'react-router-dom';
 import { useAuth, usePosts } from '../hooks';
 import { addComment } from '../api';
 import { useToasts } from 'react-toast-notifications';
 import { useState } from 'react';
-
 
 const Post = ({ post }) => {
   const [comment, setComment] = useState('');

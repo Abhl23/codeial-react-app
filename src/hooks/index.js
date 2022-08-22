@@ -53,8 +53,6 @@ export const useProvideAuth = () => {
     const response = await userLogin(email, password);
 
     if (response.success) {
-      setUser(response.data.user);
-
       setItemInLocalStorage(
         LOCALSTORAGE_TOKEN_KEY,
         response.data.token ? response.data.token : null
@@ -63,8 +61,11 @@ export const useProvideAuth = () => {
       const friendsResponse = await fetchUserFriends();
 
       if (friendsResponse.success) {
-        response.data.user.friendships = friendsResponse.data.friends;
-
+        setUser({
+          ...response.data.user,
+          friendships: friendsResponse.data.friends,
+        });
+      } else {
         setUser(response.data.user);
       }
 
@@ -194,7 +195,7 @@ export const useProvidePosts = () => {
     data: posts,
     loading,
     addPostToState,
-    addCommentToState
+    addCommentToState,
   };
 };
 
