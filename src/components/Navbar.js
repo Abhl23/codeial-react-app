@@ -60,7 +60,7 @@ const Navbar = () => {
                   className={styles.searchResultsRow}
                   key={`user-${user._id}`}
                 >
-                  <Link to={`/user/${user._id}`} onClick={() => setResults([])}>
+                  <Link to={`/user/${user._id}`} onClick={() => setSearchText('')}>
                     <img
                       src="https://cdn-icons-png.flaticon.com/128/149/149071.png"
                       alt="user-dp"
